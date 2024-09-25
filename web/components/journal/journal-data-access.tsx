@@ -13,6 +13,9 @@ import { useMemo } from "react";
 interface CreateEntryArgs {
   title: string;
   message: string;
+  data: string;
+  price: string;
+  qty: string;
   owner: PublicKey;
 }
 
@@ -39,8 +42,8 @@ export function useJournalProgram() {
 
   const createEntry = useMutation<string, Error, CreateEntryArgs>({
     mutationKey: ["journalEntry", "create", { cluster }],
-    mutationFn: async ({ title, message }) => {
-      return program.methods.createJournalEntry(title, message).rpc();
+    mutationFn: async ({ title, message, data, price, qty }) => {
+      return program.methods.createJournalEntry(title, message, data, price, qty).rpc({skipPreflight: true});
     },
     onSuccess: (signature) => {
       transactionToast(signature);
@@ -72,8 +75,8 @@ export function useJournalProgramAccount({ account }: { account: PublicKey }) {
 
   const updateEntry = useMutation<string, Error, CreateEntryArgs>({
     mutationKey: ["journalEntry", "update", { cluster }],
-    mutationFn: async ({ title, message, owner }) => {
-      return program.methods.updateJournalEntry(title, message).rpc();
+    mutationFn: async ({ title, message, data, price, qty, owner }) => {
+      return program.methods.updateJournalEntry(title, message, data, price, qty).rpc();
     },
     onSuccess: (signature) => {
       transactionToast(signature);

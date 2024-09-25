@@ -15,12 +15,15 @@ export function JournalCreate() {
   const { publicKey } = useWallet();
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState("");
+  const [data, setData] = useState("");
+  const [price, setPrice] = useState("");
+  const [qty, setQty] = useState("");
 
   const isFormValid = title.trim() !== "" && message.trim() !== "";
 
   const handleSubmit = () => {
     if (publicKey && isFormValid) {
-      createEntry.mutateAsync({ title, message, owner: publicKey });
+      createEntry.mutateAsync({ title, message, data, price, qty, owner: publicKey });
     }
   };
 
@@ -37,12 +40,35 @@ export function JournalCreate() {
         onChange={(e) => setTitle(e.target.value)}
         className="input input-bordered w-full max-w-xs"
       />
+      <br></br>
       <textarea
         placeholder="Message"
         value={message}
         onChange={(e) => setMessage(e.target.value)}
         className="textarea textarea-bordered w-full max-w-xs"
       />
+      <br></br>
+      <textarea
+        placeholder="Data"
+        value={data}
+        onChange={(e) => setData(e.target.value)}
+        className="textarea textarea-bordered w-full max-w-xs"
+      />
+      <br></br>
+      <input
+        placeholder="Price"
+        value={price}
+        onChange={(e) => setPrice(e.target.value)}
+        className="input input-bordered w-full max-w-xs"
+      />
+      <br></br>
+      <input
+        placeholder="Qty"
+        value={qty}
+        onChange={(e) => setQty(e.target.value)}
+        className="input input-bordered w-full max-w-xs"
+      />
+
       <br></br>
       <button
         className="btn btn-xs lg:btn-md btn-primary"
@@ -100,13 +126,16 @@ function JournalCard({ account }: { account: PublicKey }) {
   });
   const { publicKey } = useWallet();
   const [message, setMessage] = useState("");
+  const [data, setData] = useState("");
+  const [price, setPrice] = useState("");
+  const [qty, setQty] = useState("");
   const title = accountQuery.data?.title;
 
   const isFormValid = message.trim() !== "";
 
   const handleSubmit = () => {
     if (publicKey && isFormValid && title) {
-      updateEntry.mutateAsync({ title, message, owner: publicKey });
+      updateEntry.mutateAsync({ title, message, data, price, qty,  owner: publicKey });
     }
   };
 
@@ -127,21 +156,7 @@ function JournalCard({ account }: { account: PublicKey }) {
             {accountQuery.data?.title}
           </h2>
           <p>{accountQuery.data?.message}</p>
-          <div className="card-actions justify-around">
-            <textarea
-              placeholder="Update message here"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              className="textarea textarea-bordered w-full max-w-xs"
-            />
-            <button
-              className="btn btn-xs lg:btn-md btn-primary"
-              onClick={handleSubmit}
-              disabled={updateEntry.isPending || !isFormValid}
-            >
-              Update Journal Entry {updateEntry.isPending && "..."}
-            </button>
-          </div>
+
           <div className="text-center space-y-4">
             <p>
               <ExplorerLink
@@ -166,7 +181,7 @@ function JournalCard({ account }: { account: PublicKey }) {
               }}
               disabled={deleteEntry.isPending}
             >
-              Close
+              下架
             </button>
           </div>
         </div>
