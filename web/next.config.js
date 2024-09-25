@@ -20,6 +20,14 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  async rewrites() {
+      return [
+          {
+            source: '/localnet',
+            destination: 'http://127.0.0.1:8899',
+          },
+      ]
+  },
 };
 
 const plugins = [
