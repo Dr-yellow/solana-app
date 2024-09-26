@@ -21,7 +21,7 @@ export function JournalCreate() {
 
   const isFormValid = title.trim() !== "" && message.trim() !== "";
 
-  const handleSubmit = () => {
+  const handleCreate = () => {
     if (publicKey && isFormValid) {
       createEntry.mutateAsync({ title, message, data, price, members, owner: publicKey });
     }
@@ -66,7 +66,7 @@ export function JournalCreate() {
       <br></br>
       <button
         className="btn btn-xs lg:btn-md btn-primary"
-        onClick={handleSubmit}
+        onClick={handleCreate}
         disabled={createEntry.isPending || !isFormValid}
       >
         Create Journal Entry {createEntry.isPending && "..."}
@@ -119,16 +119,14 @@ function JournalCard({ account }: { account: PublicKey }) {
     account,
   });
   const { publicKey } = useWallet();
-  const [message, setMessage] = useState("");
-  const [data, setData] = useState("");
-  const [price, setPrice] = useState("");
-  const [members, setMembers] = useState("");
   const title = accountQuery.data?.title;
+  const message = accountQuery.data?.message;
+  const data = accountQuery.data?.data;
+  const price = accountQuery.data?.price;
+  const members = accountQuery.data?.members;
 
-  const isFormValid = message.trim() !== "";
-
-  const handleSubmit = () => {
-    if (publicKey && isFormValid && title) {
+  const handleUpdate = () => {
+    if (publicKey && title) {
       updateEntry.mutateAsync({ title, message, data, price, members,  owner: publicKey });
     }
   };
@@ -162,6 +160,22 @@ function JournalCard({ account }: { account: PublicKey }) {
                 label={ellipsify(account.toString())}
               />
             </p>
+            <button
+              className="btn btn-xs btn-secondary btn-outline"
+              onClick={() => {
+                if (
+                  !window.confirm(
+                    "Are you sure you want to update this account?"
+                  )
+                ) {
+                  return;
+                }
+                handleUpdate();
+              }}
+              disabled={updateEntry.isPending}
+            >
+              预定
+            </button>
             <button
               className="btn btn-xs btn-secondary btn-outline"
               onClick={() => {
