@@ -201,6 +201,7 @@ export function ClusterUiTable() {
           ))}
         </tbody>
       </table>
+      <br></br>
     </div>
   );
 }
