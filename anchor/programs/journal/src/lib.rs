@@ -16,6 +16,9 @@ mod journal {
         price: String,
         members: String,
     ) -> Result<()> {
+        // 初始化时，成员列表为空
+        members = "";
+
         msg!("Journal Entry Created");
         msg!("Title: {}", title);
         msg!("Message: {}", message);

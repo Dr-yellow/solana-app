@@ -62,12 +62,6 @@ export function JournalCreate() {
         className="input input-bordered w-full max-w-xs"
       />
       <br></br>
-      <input
-        placeholder="Members"
-        value={members}
-        onChange={(e) => setMembers(e.target.value)}
-        className="input input-bordered w-full max-w-xs"
-      />
 
       <br></br>
       <button
@@ -158,7 +152,7 @@ function JournalCard({ account }: { account: PublicKey }) {
           <p>{accountQuery.data?.message}</p>
           <p>{accountQuery.data?.data}</p>
           <p>{accountQuery.data?.price}</p>
-          <p>{accountQuery.data?.members}</p>
+          <p>{accountQuery.data?.members?.length > 0 ? accountQuery.data.members : 'Empty'}</p>
           <p>{ellipsify(accountQuery.data?.owner.toString())}</p>
 
           <div className="text-center space-y-4">
