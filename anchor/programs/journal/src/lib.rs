@@ -12,15 +12,24 @@ mod journal {
         ctx: Context<CreateEntry>,
         title: String,
         message: String,
+        data: String,
+        price: String,
+        qty: String,
     ) -> Result<()> {
         msg!("Journal Entry Created");
         msg!("Title: {}", title);
         msg!("Message: {}", message);
+        msg!("Data: {}", data);
+        msg!("Price: {}", price);
+        msg!("Qty: {}", qty);
 
         let journal_entry = &mut ctx.accounts.journal_entry;
         journal_entry.owner = ctx.accounts.owner.key();
         journal_entry.title = title;
         journal_entry.message = message;
+        journal_entry.data = data;
+        journal_entry.price = price;
+        journal_entry.qty = qty;
         Ok(())
     }
 
@@ -28,13 +37,22 @@ mod journal {
         ctx: Context<UpdateEntry>,
         title: String,
         message: String,
+        data: String,
+        price: String,
+        qty: String,
     ) -> Result<()> {
         msg!("Journal Entry Updated");
         msg!("Title: {}", title);
         msg!("Message: {}", message);
+        msg!("Data: {}", data);
+        msg!("Price: {}", price);
+        msg!("Qty: {}", qty);
 
         let journal_entry = &mut ctx.accounts.journal_entry;
         journal_entry.message = message;
+        journal_entry.data = data;
+        journal_entry.price = price;
+        journal_entry.qty = qty;
 
         Ok(())
     }
@@ -50,17 +68,20 @@ pub struct JournalEntryState {
     pub owner: Pubkey,
     pub title: String,
     pub message: String,
+    pub data: String,
+    pub price: String,
+    pub qty: String,
 }
 
 #[derive(Accounts)]
-#[instruction(title: String, message: String)]
+#[instruction(title: String, message: String, data: String, price: String, qty: String)]
 pub struct CreateEntry<'info> {
     #[account(
         init,
         seeds = [title.as_bytes(), owner.key().as_ref()], 
         bump, 
         payer = owner, 
-        space = 8 + 32 + 4 + title.len() + 4 + message.len()
+        space = 8 + 32 + 4 + title.len() + 4 + message.len() + 4 + data.len() + 4 + price.len() + 4 + qty.len()
     )]
     pub journal_entry: Account<'info, JournalEntryState>,
     #[account(mut)]
@@ -69,13 +90,13 @@ pub struct CreateEntry<'info> {
 }
 
 #[derive(Accounts)]
-#[instruction(title: String, message: String)]
+#[instruction(title: String, message: String, data: String, price: String, qty: String)]
 pub struct UpdateEntry<'info> {
     #[account(
         mut,
         seeds = [title.as_bytes(), owner.key().as_ref()], 
         bump, 
-        realloc = 8 + 32 + 4 + title.len() + 4 + message.len(),
+        realloc = 8 + 32 + 4 + title.len() + 4 + message.len() + 4 + data.len() + 4 + price.len() + 4 + qty.len(),
         realloc::payer = owner, 
         realloc::zero = true, 
     )]
