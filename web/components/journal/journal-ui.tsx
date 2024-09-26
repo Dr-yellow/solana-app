@@ -17,13 +17,13 @@ export function JournalCreate() {
   const [message, setMessage] = useState("");
   const [data, setData] = useState("");
   const [price, setPrice] = useState("");
-  const [qty, setQty] = useState("");
+  const [members, setMembers] = useState("");
 
   const isFormValid = title.trim() !== "" && message.trim() !== "";
 
   const handleSubmit = () => {
     if (publicKey && isFormValid) {
-      createEntry.mutateAsync({ title, message, data, price, qty, owner: publicKey });
+      createEntry.mutateAsync({ title, message, data, price, members, owner: publicKey });
     }
   };
 
@@ -63,9 +63,9 @@ export function JournalCreate() {
       />
       <br></br>
       <input
-        placeholder="Qty"
-        value={qty}
-        onChange={(e) => setQty(e.target.value)}
+        placeholder="Members"
+        value={members}
+        onChange={(e) => setMembers(e.target.value)}
         className="input input-bordered w-full max-w-xs"
       />
 
@@ -128,14 +128,14 @@ function JournalCard({ account }: { account: PublicKey }) {
   const [message, setMessage] = useState("");
   const [data, setData] = useState("");
   const [price, setPrice] = useState("");
-  const [qty, setQty] = useState("");
+  const [members, setMembers] = useState("");
   const title = accountQuery.data?.title;
 
   const isFormValid = message.trim() !== "";
 
   const handleSubmit = () => {
     if (publicKey && isFormValid && title) {
-      updateEntry.mutateAsync({ title, message, data, price, qty,  owner: publicKey });
+      updateEntry.mutateAsync({ title, message, data, price, members,  owner: publicKey });
     }
   };
 
@@ -158,7 +158,7 @@ function JournalCard({ account }: { account: PublicKey }) {
           <p>{accountQuery.data?.message}</p>
           <p>{accountQuery.data?.data}</p>
           <p>{accountQuery.data?.price}</p>
-          <p>{accountQuery.data?.qty}</p>
+          <p>{accountQuery.data?.members}</p>
           <p>{accountQuery.data?.owner.toString()}</p>
 
           <div className="text-center space-y-4">

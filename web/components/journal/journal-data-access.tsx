@@ -15,7 +15,7 @@ interface CreateEntryArgs {
   message: string;
   data: string;
   price: string;
-  qty: string;
+  members: string;
   owner: PublicKey;
 }
 
@@ -42,8 +42,8 @@ export function useJournalProgram() {
 
   const createEntry = useMutation<string, Error, CreateEntryArgs>({
     mutationKey: ["journalEntry", "create", { cluster }],
-    mutationFn: async ({ title, message, data, price, qty }) => {
-      return program.methods.createJournalEntry(title, message, data, price, qty).rpc({skipPreflight: true});
+    mutationFn: async ({ title, message, data, price, members }) => {
+      return program.methods.createJournalEntry(title, message, data, price, members).rpc({skipPreflight: true});
     },
     onSuccess: (signature) => {
       transactionToast(signature);
@@ -75,8 +75,8 @@ export function useJournalProgramAccount({ account }: { account: PublicKey }) {
 
   const updateEntry = useMutation<string, Error, CreateEntryArgs>({
     mutationKey: ["journalEntry", "update", { cluster }],
-    mutationFn: async ({ title, message, data, price, qty, owner }) => {
-      return program.methods.updateJournalEntry(title, message, data, price, qty).rpc();
+    mutationFn: async ({ title, message, data, price, members, owner }) => {
+      return program.methods.updateJournalEntry(title, message, data, price, members).rpc();
     },
     onSuccess: (signature) => {
       transactionToast(signature);
