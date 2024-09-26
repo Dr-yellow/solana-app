@@ -127,7 +127,8 @@ function JournalCard({ account }: { account: PublicKey }) {
 
   const handleUpdate = () => {
     if (publicKey && title) {
-      updateEntry.mutateAsync({ title, message, data, price, members,  owner: publicKey });
+      const now = new Date();
+      updateEntry.mutateAsync({ title, message, data, price, members: now.toLocaleTimeString(),  owner: publicKey });
     }
   };
 
