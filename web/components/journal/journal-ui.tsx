@@ -156,6 +156,9 @@ function JournalCard({ account }: { account: PublicKey }) {
             {accountQuery.data?.title}
           </h2>
           <p>{accountQuery.data?.message}</p>
+          <p>{accountQuery.data?.data}</p>
+          <p>{accountQuery.data?.price}</p>
+          <p>{accountQuery.data?.qty}</p>
 
           <div className="text-center space-y-4">
             <p>
