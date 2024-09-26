@@ -16,9 +16,6 @@ mod journal {
         price: String,
         members: String,
     ) -> Result<()> {
-        // 初始化时，成员列表为空
-        members = "";
-
         msg!("Journal Entry Created");
         msg!("Title: {}", title);
         msg!("Message: {}", message);
@@ -32,7 +29,8 @@ mod journal {
         journal_entry.message = message;
         journal_entry.data = data;
         journal_entry.price = price;
-        journal_entry.members = members;
+        // 初始化时，成员列表为空
+        journal_entry.members = "".to_string();
         Ok(())
     }
 
