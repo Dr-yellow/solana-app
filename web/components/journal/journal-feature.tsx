@@ -14,17 +14,17 @@ export default function JournalFeature() {
   return publicKey ? (
     <div>
       <AppHero
-        title="My Solana Journal"
+        title="Live on Chain"
         subtitle={
-          'Create your journal here!'
+          ' A digital stage that allows you to express freely, share creativity, and spread original charm.'
         }
       >
-        <p className="mb-6">
+        {/* <p className="mb-6">
           <ExplorerLink
             path={`account/${programId}`}
             label={ellipsify(programId.toString())}
           />
-        </p>
+        </p> */}
         <JournalCreate />
       </AppHero>
       <JournalList />
@@ -32,7 +32,7 @@ export default function JournalFeature() {
   ) : (
     <div className="max-w-4xl mx-auto">
       <div className="hero py-[64px]">
-        <div className="hero-content text-center">
+        <div className="text-center hero-content">
           <WalletButton />
         </div>
       </div>

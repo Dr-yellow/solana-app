@@ -43,7 +43,10 @@ export function useJournalProgram() {
   const createEntry = useMutation<string, Error, CreateEntryArgs>({
     mutationKey: ["journalEntry", "create", { cluster }],
     mutationFn: async ({ title, message, data, price, members }) => {
-      return program.methods.createJournalEntry(title, message, data, price, members).rpc({skipPreflight: true});
+      if (!title || !message || !data || !price || !members) {
+        throw new Error("所有字段都是必填的");
+      }
+      return program.methods.createJournalEntry(title, message, data, price, members).rpc({ skipPreflight: true });
     },
     onSuccess: (signature) => {
       transactionToast(signature);

@@ -21,12 +21,12 @@ const nextConfig = {
     svgr: false,
   },
   async rewrites() {
-      return [
-          {
-            source: '/localnet',
-            destination: 'http://127.0.0.1:8899',
-          },
-      ]
+    return [
+      {
+        source: '/localnet',
+        destination: 'http://127.0.0.1:8899',
+      },
+    ]
   },
 };
 
