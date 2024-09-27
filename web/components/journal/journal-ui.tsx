@@ -196,6 +196,14 @@ function JournalCard({ account }: { account: PublicKey }) {
             >
               下架
             </button>
+            <button
+              className="btn btn-xs btn-secondary btn-outline"
+              onClick={() => {
+              }}
+            >
+              进入
+            </button>
+
           </div>
         </div>
       </div>
